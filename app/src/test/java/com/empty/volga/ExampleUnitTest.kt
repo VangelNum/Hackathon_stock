@@ -1,4 +1,4 @@
-package com.empty.hackathon
+package com.empty.volga
 
 import org.junit.Test
 
