@@ -37,8 +37,9 @@ data class Items(
     }
 
     fun getQuoteDiffPercent(): Float {
-        if (quoteDifferencePercent != null)
-            return quoteDifferencePercent!!
+        if (quoteDifferencePercent != null) {
+            return  quoteDifferencePercent!!
+        }
         return 0f
     }
 }

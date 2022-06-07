@@ -9,10 +9,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.empty.volga.adapters.ViewAdapter
 import com.empty.volga.databinding.ActivityMainBinding
-import com.empty.volga.finnhub.Сallback
+import com.empty.volga.finnhub.Callback
 import com.empty.volga.finnhub.Receiver
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 
-class MainActivity : AppCompatActivity(), Сallback {
+class MainActivity : AppCompatActivity(), Callback {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewAdapter: ViewAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity(), Сallback {
             Receiver.Start(this)
         }
         Receiver.Start(this)
+
         Thread {
             while (true){
                 val last = viewAdapter.getLast()

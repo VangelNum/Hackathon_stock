@@ -1,14 +1,18 @@
 package com.empty.volga.adapters
 
+
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.empty.volga.R
 import com.empty.volga.Items
+import com.empty.volga.R
 import com.empty.volga.databinding.StockItemBinding
+import java.text.DecimalFormat
+
 
 class ViewAdapter(var mList: ArrayList<Items>, val layoutManager: LinearLayoutManager):
     RecyclerView.Adapter<ViewAdapter.StockViewHolder>() {
@@ -44,12 +48,33 @@ class ViewAdapter(var mList: ArrayList<Items>, val layoutManager: LinearLayoutMa
     inner class StockViewHolder(item: View): RecyclerView.ViewHolder(item){
         val binding = StockItemBinding.bind(item)
         fun bind(stockItem: Items){
+            val df = DecimalFormat("##.##")
+            val df2 = DecimalFormat("##.###")
+
             binding.stockCompName.text = stockItem.description
             binding.stockTick.text = stockItem.tick
-            binding.currentQuote.text = stockItem.getCurrQuote().toString()
-            binding.quoteDif.text = stockItem.getQuoteDiff().toString()
-            binding.quoteDifPercent.text = stockItem.getQuoteDiffPercent().toString()
+            binding.currentQuote.text = df.format(stockItem.getCurrQuote()) + " $"
+            val diffprecent: Float = stockItem.getQuoteDiff() //разность в долларах
+
+            if (diffprecent>0f) {
+                binding.quoteDifPercent.setTextColor(Color.parseColor("#0aad3f")) // зеленый
+                binding.quoteDif.setTextColor(Color.parseColor("#0aad3f"))
+                binding.quoteDif.text = '+' + df2.format(stockItem.getQuoteDiff()) + "$"
+                binding.quoteDifPercent.text = "(+" + df.format(diffprecent) + " %)"
+            }
+            if (diffprecent<0f){
+                binding.quoteDifPercent.setTextColor(Color.parseColor("#B31920")) // красный
+                binding.quoteDif.setTextColor(Color.parseColor("#B31920"))
+                binding.quoteDif.text = df2.format(stockItem.getQuoteDiff()) + "$"
+                binding.quoteDifPercent.text = "(" + df.format(diffprecent) + " %)"
+            }
+           // binding.quoteDif.text = df2.format(stockItem.getQuoteDiff()) + "$"
+            //binding.quoteDifPercent.text = "(" + df.format(diffprecent) + " %)"
+
             binding.stockCompName.isSelected = true
         }
+
+
+
     }
 }

@@ -13,7 +13,7 @@ object Receiver {
     private var currItemNum = 0
     private var isGetting = false
 
-    fun Start(callback: Сallback){
+    fun Start(callback: Callback){
         ApiClient.apiKey["token"] = "ca3ti7iad3ia58rfi620"
         val apiClient = DefaultApi()
         Thread {
@@ -54,7 +54,7 @@ object Receiver {
                     currItemNum++
                 else
                     currItemNum = 0
-                Thread.sleep(100)
+                Thread.sleep(1000)
             }
         }.start()
     }
